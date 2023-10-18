@@ -6,11 +6,9 @@ const Table = () => {
   const { searchInput } = useSearchContext();
   const dataMemo = useMemo(
     () =>
-      searchInput?.length > 0
-        ? DATA.filter((item) =>
-            item.name.toLowerCase().includes(searchInput.toLowerCase())
-          )
-        : DATA,
+      DATA.filter((item) =>
+        item.name.toLowerCase().includes(searchInput.toLowerCase())
+      ),
     [searchInput]
   );
 
