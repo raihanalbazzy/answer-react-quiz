@@ -1,6 +1,19 @@
-import DATA from "./_data";
+import { useMemo } from 'react';
+import DATA from './_data';
+import { useSearchContext } from '../../context/TableContext';
 
 const Table = () => {
+  const { searchInput } = useSearchContext();
+  const dataMemo = useMemo(
+    () =>
+      searchInput?.length > 0
+        ? DATA.filter((item) =>
+            item.name.toLowerCase().includes(searchInput.toLowerCase())
+          )
+        : DATA,
+    [searchInput]
+  );
+
   return (
     <table>
       <thead>
@@ -11,16 +24,16 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        {DATA.map((eachrow, idx) => (
-          <tr key={idx}>
-            <td>{eachrow.name}</td>
-            <td>{eachrow.age}</td>
-            <td>{eachrow.address}</td>
+        {dataMemo.map((item, key) => (
+          <tr key={item + key}>
+            <td>{item.name}</td>
+            <td>{item.age}</td>
+            <td>{item.address}</td>
           </tr>
         ))}
       </tbody>
     </table>
-  )
-}
+  );
+};
 
 export default Table;

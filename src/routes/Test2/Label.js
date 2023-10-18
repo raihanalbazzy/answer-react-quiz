@@ -6,7 +6,13 @@ const cssLabel = css({
   padding: '2px 8px',
   backgroundColor: '#e0e0e0',
   borderRadius: 8,
+  '&:hover': {
+    button: {
+      display: 'inline',
+    },
+  },
   button: {
+    display: 'none',
     backgroundColor: 'transparent',
     color: 'red',
     marginLeft: 4,
@@ -14,16 +20,18 @@ const cssLabel = css({
     padding: 0,
     border: 'none',
     outline: 'none',
-  }
-})
+  },
+});
 
-const Label = () => {
+const Label = (props) => {
   return (
     <span className={cssLabel}>
-      RENDER VALUE HERE
-      <button type="button">⊗</button>
+      {props.value}
+      <button onClick={props.onClick} type="button">
+        ⊗
+      </button>
     </span>
-  )
-}
+  );
+};
 
 export default Label;

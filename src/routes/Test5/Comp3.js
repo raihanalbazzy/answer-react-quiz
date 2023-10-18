@@ -1,18 +1,30 @@
-import { cssWrapper } from "./style";
+import { cssWrapper } from './style';
+import Comp4 from './Comp4';
+import { useCounterContext } from '../../context/CounterContext';
+import ModalContext, { useModalContext } from '../../context/ModalContext';
 
-import { useState } from "react";
-import Comp4 from "./Comp4";
+function ModalComp() {
+  const { showModal, toggleModal } = useModalContext();
+  return (
+    <>
+      <button onClick={toggleModal} type="button">
+        Show Modal
+      </button>
+      {showModal && <Comp4 />}
+    </>
+  );
+}
 
 const Comp3 = (/* NO PROPS ALLOWED */) => {
-  const [ showModal ] = useState(true);
-
-  return(
-    <>
-      <div className={cssWrapper}>The Inputted Value is: ______*</div>
-      <button type="button">Show Modal</button>
-      {showModal && <Comp4/>}
-    </>
-  )
-}
+  const { counter } = useCounterContext();
+  return (
+    <ModalContext>
+      <div className={cssWrapper}>
+        The Inputted Value is: {counter['counter']}
+      </div>
+      <ModalComp />
+    </ModalContext>
+  );
+};
 
 export default Comp3;
