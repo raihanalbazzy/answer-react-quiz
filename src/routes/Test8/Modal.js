@@ -1,4 +1,3 @@
-import { css } from 'react-emotion';
 import { cssModal, modalContent } from './style';
 import { useImperativeHandle, useState, forwardRef } from 'react';
 import { useUserContext } from '../../context/UserContext';
@@ -20,7 +19,7 @@ const Modal = forwardRef(function MyInput(props, ref) {
 
   const onResetUser = () => {
     setVisible(false);
-    resetUser();
+    resetUser('showing-modal-form');
   };
 
   return (

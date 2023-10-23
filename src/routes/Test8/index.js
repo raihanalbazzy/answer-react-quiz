@@ -7,39 +7,22 @@ const Form = (props) => {
   const { setUser, user } = useUserContext();
 
   // ONLY ONE HANDLE METHOD ALLOWED
-  const handleInput = (event) => {
-    setUser({ name: event.target.name, value: event.target.value });
+  const onSubmit = (event) => {
+    event.preventDefault();
+    const elements = event.target.elements;
+    for (const key in user) {
+      if (typeof elements[key] !== 'undefined') {
+        setUser({ name: key, value: elements[key].value });
+      }
+    }
+    if (props.modalRef.current) props.modalRef.current.toggle();
   };
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        if (props.modalRef.current) props.modalRef.current.toggle();
-      }}
-      className={cssForm}
-    >
-      <input
-        name="name"
-        type="text"
-        placeholder="name"
-        value={user.name}
-        onChange={handleInput}
-      />
-      <input
-        name="age"
-        type="text"
-        placeholder="age"
-        value={user.age}
-        onChange={handleInput}
-      />
-      <textarea
-        name="address"
-        type="text"
-        value={user.address}
-        placeholder="address"
-        onChange={handleInput}
-      />
+    <form id="showing-modal-form" onSubmit={onSubmit} className={cssForm}>
+      <input name="name" placeholder="name" />
+      <input name="age" placeholder="age" />
+      <textarea name="address" placeholder="address" />
       <button type="submit">Submit</button>
     </form>
   );
